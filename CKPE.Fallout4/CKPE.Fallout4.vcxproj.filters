@@ -299,6 +299,9 @@
     <ClCompile Include="Src\EditorAPI\TESTexture.cpp">
       <Filter>EditorAPI\T</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSStringRefRE.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -878,6 +881,9 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BGSPreviewTransform.h">
       <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSStringRefRE.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

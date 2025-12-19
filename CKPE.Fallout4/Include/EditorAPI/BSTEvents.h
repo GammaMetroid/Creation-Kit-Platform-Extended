@@ -7,7 +7,7 @@
 #include "BSFixedString.h"
 #include "BSTList.h"
 #include "BSTArray.h"
-#include "BSSimpleLock.h"
+#include "BSLock.h"
 
 namespace CKPE
 {
@@ -148,7 +148,7 @@ namespace CKPE
 
 				bool AddEventSink(SinkT* sink)
 				{
-					SimpleLock locker(&lock);
+					BSAutoLock locker(&lock);
 
 					// Check for duplicate first
 					for (int i = 0; i < eventSinks.count; i++)
@@ -163,7 +163,7 @@ namespace CKPE
 
 				void RemoveEventSink(SinkT* sink)
 				{
-					SimpleLock locker(&lock);
+					BSAutoLock locker(&lock);
 
 					for (int i = 0; i < eventSinks.count; i++)
 					{
@@ -174,7 +174,7 @@ namespace CKPE
 					}
 				}
 
-				SimpleLock			lock;				// 000
+				BSSpinLock			lock;				// 000
 				BSTArray<SinkT*>	eventSinks;			// 008
 				BSTArray<SinkT*>	addBuffer;			// 020
 				BSTArray<SinkT*>	removeBuffer;		// 038

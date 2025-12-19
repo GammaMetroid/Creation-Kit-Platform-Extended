@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <mmsystem.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
@@ -22,6 +23,7 @@ namespace CKPE
 		{
 			std::uintptr_t pointer_CrashMHDTMoreThan70Patch_sub1 = 0;
 			std::uintptr_t pointer_CrashMHDTMoreThan70Patch_sub2 = 0;
+			std::uintptr_t pointer_CrashMHDTMoreThan70Patch_sub3 = 0;
 
 			CrashMHDTMoreThan70::CrashMHDTMoreThan70() : Common::Patch()
 			{
@@ -53,33 +55,10 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130;
 			}
 
-			std::uintptr_t pointer_CrashMHDTMoreThan70Patch_sub3 = 0;
-			static void* _aa_sub1(void* a1, void* a2, void* a3, void* a4, void* a5, void* a6) noexcept(true)
-			{
-				__try
-				{
-					return fast_call<void*>(pointer_CrashMHDTMoreThan70Patch_sub3, a1, a2, a3, a4, a5, a6);
-				}
-				__except (1)
-				{
-					return nullptr;
-				}
-			}
-
-			static void _aa_sub2() noexcept(true)
-			{
-				__try
-				{
-					fast_call<void>(0x140FD71ED);
-					Application::GetSingleton()->Terminate();
-				}
-				__except (1)
-				{}
-			}
-
 			bool CrashMHDTMoreThan70::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
+				auto verPatch = db->GetVersion();
+				if ((verPatch != 1) && (verPatch != 2))
 					return false;
 
 				auto interface = CKPE::Common::Interface::GetSingleton();
@@ -93,9 +72,15 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
 				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub2);
 
-	//			pointer_CrashMHDTMoreThan70Patch_sub3 = Detours::DetourClassJump(base + 0x2259770, (std::uintptr_t)&_aa_sub1);
-		//		Detours::DetourCall(base + 0x13D8D7F, (std::uintptr_t)&_aa_sub2);
+				if (verPatch == 2)
+				{
+					// Added save and terminate process to end gen MHDT
+					
+					pointer_CrashMHDTMoreThan70Patch_sub3 = __CKPE_OFFSET(5);
 
+					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub3_additional);
+				}
+				
 				return true;
 			}
 
@@ -142,6 +127,20 @@ namespace CKPE
 				{
 					_CONSOLE("ASSERTION: Fatal calculating the height for the point (%.0f, %.0f) of (%.3f, %.3f)", coord_x, coord_y, pp->x, pp->y);
 				}
+			}
+
+			void CrashMHDTMoreThan70::sub3_additional() noexcept(true)
+			{
+				ReleaseCapture();
+
+				__try
+				{
+					fast_call<void>(pointer_CrashMHDTMoreThan70Patch_sub3);		
+				}
+				__except (1)
+				{}
+				
+				MessageBoxA(0, "Done", "Done", MB_OK);
 			}
 		}
 	}

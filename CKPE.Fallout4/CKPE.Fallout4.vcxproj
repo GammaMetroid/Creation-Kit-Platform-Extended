@@ -154,6 +154,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AssertD3D11.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSArchiveManagerModded.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSResourceLooseFiles.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSStringRefRE.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CellViewWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ChooseSoundFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Console.cpp" />
@@ -335,6 +336,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AssertD3D11.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSArchiveManagerModded.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSResourceLooseFiles.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSStringRefRE.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CellViewWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ChooseSoundFile.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Console.h" />

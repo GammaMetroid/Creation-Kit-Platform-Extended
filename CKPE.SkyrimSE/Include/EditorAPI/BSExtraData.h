@@ -273,6 +273,8 @@ namespace CKPE
 			};
 			static_assert(sizeof(BaseExtraList) == 0x10);
 
+			// ExtraDataList
+
 			namespace Detail
 			{
 				template<class T>
@@ -316,6 +318,8 @@ namespace CKPE
 			};
 			static_assert(sizeof(ExtraDataList) == 0x18);
 
+			// ExtraStartingPosition
+
 			class ExtraStartingPosition : public BSExtraData
 			{
 				NiAPI::NiPoint3 _position;
@@ -338,6 +342,8 @@ namespace CKPE
 			};
 			static_assert(sizeof(ExtraStartingPosition) == 0x30);
 
+			// ExtraEditorRef3DData
+
 			class ExtraEditorRef3DData : public BSExtraData
 			{
 				NiAPI::NiPointer<NiAPI::NiAVObject> _3D;	// BSFadeNode by RTTI
@@ -354,6 +360,8 @@ namespace CKPE
 				[[nodiscard]] inline NiAPI::NiPointer<NiAPI::NiAVObject> Get3D() const noexcept(true) { return _3D; }
 			};
 			static_assert(sizeof(ExtraEditorRef3DData) == 0x20);
+
+			// ExtraEditorRefMoveData
 
 			class ExtraEditorRefMoveData : public BSExtraData
 			{
@@ -379,6 +387,8 @@ namespace CKPE
 			};
 			static_assert(sizeof(ExtraEditorRefMoveData) == 0x38);
 
+			// ExtraPrimitive
+
 			class BGSPrimitive;
 
 			class ExtraPrimitive : public BSExtraData
@@ -396,6 +406,8 @@ namespace CKPE
 			};
 			static_assert(sizeof(ExtraPrimitive) == 0x18);
 
+			// ExtraOcclusionShape
+
 			class BSOcclusionPlane;
 
 			class ExtraOcclusionShape : public BSExtraData
@@ -412,6 +424,79 @@ namespace CKPE
 				[[nodiscard]] BSOcclusionPlane* Get() const noexcept(true) { return _OcclusionShape; }
 			};
 			static_assert(sizeof(ExtraOcclusionShape) == 0x18);
+
+			// ExtraLocationRefType
+
+			class BGSLocationRefType;
+
+			class ExtraLocationRefType : public BSExtraData
+			{
+				BGSLocationRefType* _LocationRefType{ nullptr };
+			public:
+				static constexpr auto TYPE{ kLocationRefType };
+
+				ExtraLocationRefType(BGSLocationRefType* LocationRefType) : BSExtraData(), _LocationRefType(LocationRefType) {}
+				virtual ~ExtraLocationRefType() = default;
+
+				[[nodiscard]] virtual inline std::uint8_t GetType() const noexcept(true) { return TYPE; }
+
+				[[nodiscard]] BGSLocationRefType* Get() const noexcept(true) { return _LocationRefType; }
+			};
+			static_assert(sizeof(ExtraLocationRefType) == 0x18);
+
+			// ExtraPatrolRefData
+
+			namespace Forms
+			{
+				class TESTopic;
+			}
+
+			class ExtraPatrolRefData : public BSExtraData
+			{
+				struct DATA 
+				{
+					float IdleTime;
+					char pad04[0x14];
+					bool IsTopicIndex;
+					union {
+						std::uint32_t Index;
+						Forms::TESTopic* Form;
+					} Topic;
+				} *Data{ nullptr };
+			public:
+				static constexpr auto TYPE{ kPatrolRefData };
+
+				ExtraPatrolRefData() : BSExtraData() {}
+				virtual ~ExtraPatrolRefData() = default;
+
+				[[nodiscard]] virtual inline std::uint8_t GetType() const noexcept(true) { return TYPE; }
+
+				[[nodiscard]] inline float GetIdleTime() const noexcept(true) { return Data ? Data->IdleTime : 0.f; }
+				[[nodiscard]] inline bool IsTopicIndex() const noexcept(true) { return Data ? Data->IsTopicIndex : false; }
+
+				[[nodiscard]] inline std::uint32_t GetTopicIndex() const noexcept(true)
+				{ return (Data && Data->IsTopicIndex) ? Data->Topic.Index : (std::uint32_t)-1; }
+				[[nodiscard]] inline Forms::TESTopic* GetTopicForm() const noexcept(true)
+				{ return (Data && !Data->IsTopicIndex) ? Data->Topic.Form : nullptr; }
+			};
+			static_assert(sizeof(ExtraPatrolRefData) == 0x18);
+
+			//// ExtraPatrolRefData
+
+			//class ExtraPatrolRefData : public BSExtraData
+			//{
+			//	BGSLocationRefType* _LocationRefType{ nullptr };
+			//public:
+			//	static constexpr auto TYPE{ kLocationRefType };
+
+			//	ExtraPatrolRefData(BGSLocationRefType* LocationRefType) : BSExtraData(), _LocationRefType(LocationRefType) {}
+			//	virtual ~ExtraPatrolRefData() = default;
+
+			//	[[nodiscard]] virtual inline std::uint8_t GetType() const noexcept(true) { return TYPE; }
+
+			//	[[nodiscard]] BGSLocationRefType* Get() const noexcept(true) { return _LocationRefType; }
+			//};
+			//static_assert(sizeof(ExtraPatrolRefData) == 0x18);
 		}
 	}
 }

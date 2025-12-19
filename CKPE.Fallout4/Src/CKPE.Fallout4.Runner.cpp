@@ -15,6 +15,7 @@
 #include <Patches/CKPE.Fallout4.Patch.AssertD3D11.h>
 #include <Patches/CKPE.Fallout4.Patch.BSArchiveManagerModded.h>
 #include <Patches/CKPE.Fallout4.Patch.BSResourceLooseFiles.h>
+#include <Patches/CKPE.Fallout4.Patch.BSStringRefRE.h>
 #include <Patches/CKPE.Fallout4.Patch.CellViewWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.ChooseSoundFile.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
@@ -101,6 +102,7 @@ namespace CKPE
 			mgr->Register(new Patch::AssertD3D11);
 			mgr->Register(new Patch::BSArchiveManagerModded);
 			mgr->Register(new Patch::BSResourceLooseFiles);
+			mgr->Register(new Patch::BSStringRefRE);
 			mgr->Register(new Patch::CellViewWindow);
 			mgr->Register(new Patch::ChooseSoundFile);
 			mgr->Register(new Patch::Console);
