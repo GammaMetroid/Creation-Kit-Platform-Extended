@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Asserts.h>
-#include <EditorAPI/BSSimpleLock.h>
+#include <EditorAPI/BSSpinLock.h>
 
 #pragma once
 
@@ -18,7 +18,7 @@ namespace CKPE
 			public:
 				struct Lock
 				{
-					SimpleLock lock;
+					BSSpinLock lock;
 				};
 
 				struct Entry
@@ -103,8 +103,14 @@ namespace CKPE
 				{
 					Entry* data{ nullptr };
 
-					constexpr Ref() noexcept(true) = default;
+					inline static Ref* (*ctor)(Ref*, const char* buf);
+					inline static Ref* (*set)(Ref*, const char* buf);
+					inline static void (*release)(Ref*);
 
+					constexpr Ref() noexcept(true) { ctor(this, ""); }
+					explicit Ref(const char* buf) noexcept(true) { ctor(this, buf); }
+
+					inline bool operator==(const char* lhs) const noexcept(true) { Ref tmp(lhs); bool res = data == tmp.data; release(&tmp); return res; }
 					inline bool operator==(const Ref& lhs) const noexcept(true) { return data == lhs.data; }
 					inline bool operator<(const Ref& lhs) const noexcept(true) { return data < lhs.data; }
 

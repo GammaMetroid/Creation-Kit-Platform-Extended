@@ -200,6 +200,20 @@ namespace CKPE
 						((EditorAPI::Forms::TESForm*)form)->DebugInfo(buf.get(), 256);
 						Result = buf.get();
 					}
+					else
+					{
+						auto node = _DYNAMIC_CAST((void*)Address, 0, RttiName, "class NiAVObject");
+						if (node)
+						{
+							auto buf = std::make_unique<char[]>(256);
+							auto refr = (EditorAPI::Forms::TESForm*)((EditorAPI::NiAPI::NiAVObject*)node)->GetFormRef();
+							if (refr)
+							{
+								refr->DebugInfo(buf.get(), 256);
+								Result = buf.get();
+							}
+						}
+					}
 				}
 			}
 

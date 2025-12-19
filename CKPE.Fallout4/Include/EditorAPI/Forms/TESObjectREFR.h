@@ -136,7 +136,7 @@ namespace CKPE
 					inline NiAPI::NiPoint3 GetRotate() const noexcept(true) { return _rotate; }
 					inline void SetRotate(const NiAPI::NiPoint3& val) { _rotate = val; }
 					
-					inline std::uint16_t GetScale() const noexcept(true) { return *(std::uint16_t*)(((std::uintptr_t)this) + 0x118); }
+					[[nodiscard]] inline std::uint16_t GetScale() const noexcept(true) { return *(std::uint16_t*)(((std::uintptr_t)this) + 0x118); }
 					inline void SetScale(std::uint16_t val) noexcept(true) { *(std::uint16_t*)(((std::uintptr_t)this) + 0x118) = val; }
 					inline float GetScaleFloat() const noexcept(true) { return ((float)GetScale() / 100); }
 					inline void SetScaleFloat(float val) { SetScale(std::uint16_t(val * 100)); }

@@ -13,6 +13,14 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			typedef BSStringCache::Ref BSFixedString;
+
+			class BSAutoFixedString : public BSFixedString
+			{
+			public:
+				BSAutoFixedString() : BSFixedString() { }
+				BSAutoFixedString(const char* buf) : BSFixedString(buf) { }
+				~BSAutoFixedString() { release(this); }
+			};
 		}
 	}
 }

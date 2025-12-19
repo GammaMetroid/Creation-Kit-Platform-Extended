@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release-NoAVX2|x64">
@@ -311,6 +311,8 @@
     <ClInclude Include="Include\EditorAPI\Forms\BGSFootstepSet.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSImpactData.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSImpactDataSet.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSLocationRefType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSMaterialType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSSounds.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSVoiceType.h" />
