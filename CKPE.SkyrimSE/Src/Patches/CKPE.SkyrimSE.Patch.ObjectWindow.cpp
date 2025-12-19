@@ -196,8 +196,7 @@ namespace CKPE
 					lpObjWnd->Controls.ItemList = lpObjWnd->ObjectWindow.GetControl(1041);
 					lpObjWnd->Controls.EditFilter = lpObjWnd->ObjectWindow.GetControl(2581);
 					lpObjWnd->Controls.Spliter = lpObjWnd->ObjectWindow.GetControl(2157);
-					lpObjWnd->Controls.ActiveOnly.CreateWnd(lpObjWnd->ObjectWindow,
-						lpObjWnd->ObjectWindow.GetControl(UI_OBJECT_WINDOW_CHECKBOX), UI_OBJECT_WINDOW_CHECKBOX);
+					lpObjWnd->Controls.ActiveOnly = lpObjWnd->ObjectWindow.GetControl(UI_OBJECT_WINDOW_CHECKBOX);
 
 					// Eliminate the flicker when changing categories
 					ListView_SetExtendedListViewStyleEx(lpObjWnd->Controls.ItemList.Handle, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
